@@ -1,4 +1,4 @@
-import React, {useReducer, useState} from 'react';
+import React, {useReducer} from 'react';
 import './App.css';
 import {Todolist} from './Todolist';
 import {v1} from 'uuid';
@@ -11,8 +11,8 @@ import {
     changeTaskStatus, editTaskTitleAC, editToDoListTitleAC,
     removeTaskAC,
     removeToDoListAC,
-    tasksReducer
-} from "./Reducers/tasksReducer";
+} from "./Action Creators/ToDoListsActionCreators";
+import {toDoListsReducer} from "./Reducers/ToDoListsReducer";
 
 
 export type ToDoListType = {
@@ -26,42 +26,16 @@ export type TasksType = {
     isDone: boolean
 }
 
-// export type FilterValuesType = "all" | "active" | "completed";
-
 export enum FilterValuesType {
     All = "all",
     Active = "active",
     Completed = "completed",
 }
 
-
 function App() {
 
-    // const [toDoLists, setToDoLists] = useState<Array<ToDoListType>>([
-    //     {
-    //         title: "What to learn",
-    //         filter: FilterValuesType.All,
-    //         tasks: [
-    //             {taskId: v1(), title: "HTML&CSS", isDone: true},
-    //             {taskId: v1(), title: "JS", isDone: true},
-    //             {taskId: v1(), title: "JS", isDone: false},
-    //             {taskId: v1(), title: "JS", isDone: false},
-    //         ],
-    //     },
-    //     {
-    //         title: "What to do",
-    //         filter: FilterValuesType.All,
-    //         tasks: [
-    //             {taskId: v1(), title: "HTML&CSS2", isDone: true},
-    //             {taskId: v1(), title: "JS2", isDone: true},
-    //             {taskId: v1(), title: "JS2", isDone: false},
-    //             {taskId: v1(), title: "JS2", isDone: false},
-    //             {taskId: v1(), title: "JS2", isDone: true},
-    //         ],
-    //     }
-    // ])
 
-    const [toDoLists, dispatchToDoLists]= useReducer(tasksReducer,[
+    const [toDoLists, dispatchToDoLists] = useReducer(toDoListsReducer, [
         {
             title: "What to learn",
             filter: FilterValuesType.All,
@@ -85,37 +59,40 @@ function App() {
         }
     ])
 
-    function removeTask(taskId: string, todolistId: number) { // remove task from state
+    function removeTask(taskId: string, todolistId: number) {
         dispatchToDoLists(removeTaskAC(taskId, todolistId))
     }
 
-    function addTask(title: string, todolistId: number) { // add task in state
+    function addTask(title: string, todolistId: number) {
         dispatchToDoLists(addTaskAC(title, todolistId))
     }
+
     //
     function changeStatus(taskId: string, isDone: boolean, todolistId: number) {
         dispatchToDoLists(changeTaskStatus(taskId, isDone, todolistId))
     }
+
     //
     function changeFilter(value: FilterValuesType, todolistId: number) {
         dispatchToDoLists(changeToDoListFilterAC(value, todolistId))
-
     }
+
     //
     function removeTodolist(todolistId: number) {
         dispatchToDoLists(removeToDoListAC(todolistId))
     }
+
     //
     const editTaskTitle = (toDoListId: number, taskId: string, title: string) => {
         dispatchToDoLists(editTaskTitleAC(toDoListId, taskId, title))
     }
 
-    const editToDoListTitle = (toDoListId: number, title: string) => { // change ToDoListTitle
+    const editToDoListTitle = (toDoListId: number, title: string) => {
         dispatchToDoLists(editToDoListTitleAC(toDoListId, title))
     }
     //
     const addToDoList = (title: string) => {
-       dispatchToDoLists(addToDoListAC(title))
+        dispatchToDoLists(addToDoListAC(title))
     }
 
     return (
@@ -141,11 +118,10 @@ function App() {
                             tasksForTodolist = allTodolistTasks.filter(t => t.isDone);
                         }
 
-                        return <Grid item>
+                        return <Grid item key={index}>
                             <Paper elevation={2}
                                    style={{padding: '15px',}}>
                                 <Todolist
-                                    key={index}
                                     id={index}
                                     title={tl.title}
                                     tasks={tasksForTodolist}

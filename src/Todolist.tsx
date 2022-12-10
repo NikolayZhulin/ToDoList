@@ -79,17 +79,17 @@ export function Todolist(props: PropsType) {
         <div>
             <Button
                 onClick={() => props.changeFilter(FilterValuesType.All, props.id)}
-                variant={props.filter === FilterValuesType.All ? 'outlined' : 'text'}
+                variant={props.filter === 'all' ? 'outlined' : 'text'}
                 color={"secondary"}
             >All
             </Button>
             <Button onClick={() => props.changeFilter(FilterValuesType.Active, props.id)}
-                    variant={props.filter === FilterValuesType.Active ? 'outlined' : 'text'}
+                    variant={props.filter === 'active' ? 'outlined' : 'text'}
                     color={"secondary"}
             >Active
             </Button>
             <Button onClick={() => props.changeFilter(FilterValuesType.Completed, props.id)}
-                    variant={props.filter === FilterValuesType.Completed ? 'outlined' : 'text'}
+                    variant={props.filter === 'completed' ? 'outlined' : 'text'}
                     color={"secondary"}
             >Completed
             </Button>

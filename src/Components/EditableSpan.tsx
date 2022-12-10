@@ -22,7 +22,6 @@ export const EditableSpan = (props: EditableSpanPropType) => {
     }
 
     return editMode
-        // ? <input value={title} onBlur={deactivateEditMode} onChange={onChangeHandler} autoFocus/>
         ? <TextField id="outlined-basic"
                      label={"Change task text"}
                      variant="standard"

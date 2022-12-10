@@ -8,13 +8,13 @@ type AddItemPropsType = {
 export const AddItemForm = (props: AddItemPropsType) => {
 
     let [title, setTitle] = useState("")
-    let [error, setError] = useState<string | null>(null) //set error message when we get error
+    let [error, setError] = useState<string | null>(null)
 
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => { // add input value in state
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value)
     }
 
-    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => { //reset error and add item if we dont have an error
+    const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         setError(null);
         if (e.charCode === 13) {
             title.trim()
@@ -24,7 +24,7 @@ export const AddItemForm = (props: AddItemPropsType) => {
         }
     }
 
-    const addTaskHandler = () => {  //reset error and add item if we dont have an error
+    const addTaskHandler = () => {
         !title.trim()
             ? setError('Error')
             : props.addItem(title.trim());
@@ -32,14 +32,9 @@ export const AddItemForm = (props: AddItemPropsType) => {
     }
 
     return <div>
-        {/*<input value={title}*/}
-        {/*       onChange={onChangeHandler}*/}
-        {/*       onKeyPress={onKeyPressHandler}*/}
-        {/*       className={error ? "error" : ""}*/}
-        {/*/>*/}
         <TextField id="outlined-basic"
                    error={!!error}
-                   label={!!error?'Enter correct value':"Add your task..."}
+                   label={!!error ? 'Enter correct value' : "Add your task..."}
                    variant="outlined"
                    value={title}
                    onChange={onChangeHandler} autoFocus
@@ -50,7 +45,7 @@ export const AddItemForm = (props: AddItemPropsType) => {
         <Button onClick={addTaskHandler}
                 variant={"outlined"}
                 color={"secondary"}
-                style={{minWidth:'39px', minHeight: '39px'}}
+                style={{minWidth: '39px', minHeight: '39px'}}
         >+</Button>
         {/*{error && <div className="error-message">{error}</div>}*/}
     </div>
