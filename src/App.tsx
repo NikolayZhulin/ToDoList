@@ -8,7 +8,7 @@ import {Container, Grid, Paper} from "@mui/material";
 import {
     addTaskAC, addToDoListAC,
     changeToDoListFilterAC,
-    changeTaskStatus, editTaskTitleAC, editToDoListTitleAC,
+    changeTaskStatusAC, editTaskTitleAC, editToDoListTitleAC,
     removeTaskAC,
     removeToDoListAC,
 } from "./Action Creators/ToDoListsActionCreators";
@@ -35,7 +35,7 @@ export enum FilterValuesType {
 function App() {
 
 
-    const [toDoLists, dispatchToDoLists] = useReducer(toDoListsReducer, [
+   const [toDoLists, dispatchToDoLists] = useReducer(toDoListsReducer, [
         {
             title: "What to learn",
             filter: FilterValuesType.All,
@@ -69,7 +69,7 @@ function App() {
 
     //
     function changeStatus(taskId: string, isDone: boolean, todolistId: number) {
-        dispatchToDoLists(changeTaskStatus(taskId, isDone, todolistId))
+        dispatchToDoLists(changeTaskStatusAC(taskId, isDone, todolistId))
     }
 
     //

@@ -12,7 +12,7 @@ export type ActionCreatorsType =
 
 export type AddTaskACType = ReturnType<typeof addTaskAC>
 export type RemoveTaskACType = ReturnType<typeof removeTaskAC>
-export type ChangeTaskStatusACType = ReturnType<typeof changeTaskStatus>
+export type ChangeTaskStatusACType = ReturnType<typeof changeTaskStatusAC>
 export type ChangeToDoListFilterACType = ReturnType<typeof changeToDoListFilterAC>
 export type RemoveToDoListACType = ReturnType<typeof removeToDoListAC>
 export type EditTaskTitleACType = ReturnType<typeof editTaskTitleAC>
@@ -39,7 +39,7 @@ export const removeTaskAC = (taskId: string, todolistId: number) => {
     } as const;
 }
 
-export const changeTaskStatus = (taskId: string, isDone: boolean, todolistId: number) => {
+export const changeTaskStatusAC = (taskId: string, isDone: boolean, todolistId: number) => {
     return {
         type: "CHANGE-TASK-STATUS",
         payload: {
