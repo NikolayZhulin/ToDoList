@@ -9,7 +9,7 @@ export const toDoListsReducer = (state: ToDoListType[], action: ActionCreatorsTy
             const newTask = {taskId: v1(), title: action.payload.title, isDone: false}
             return state.map((todolist, ind) => ind === action.payload.todolistId
                 ? {...todolist, tasks: [newTask, ...todolist.tasks]}
-                : todolist);
+                : todolist );
         case "REMOVE-TASK":
             return state.map((todolist, ind) => ind === action.payload.todolistId
                 ? {...todolist, tasks: todolist.tasks.filter(task => task.taskId !== action.payload.taskId)}
