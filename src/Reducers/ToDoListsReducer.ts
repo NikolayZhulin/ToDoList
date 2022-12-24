@@ -2,8 +2,31 @@ import {FilterValuesType, ToDoListType} from "../App";
 import {v1} from "uuid";
 import {ActionCreatorsType} from "../Action Creators/ToDoListsActionCreators";
 
+const initialState:ToDoListType[] = [
+     // {
+     //     title: "What to learn",
+     //     filter: FilterValuesType.All,
+     //     tasks: [
+     //         {taskId: v1(), title: "HTML&CSS", isDone: true},
+     //         {taskId: v1(), title: "JS", isDone: true},
+     //         {taskId: v1(), title: "JS", isDone: false},
+     //         {taskId: v1(), title: "JS", isDone: false},
+     //     ],
+     // },
+     // {
+     //     title: "What to do",
+     //     filter: FilterValuesType.All,
+     //     tasks: [
+     //         {taskId: v1(), title: "HTML&CSS2", isDone: true},
+     //         {taskId: v1(), title: "JS2", isDone: true},
+     //         {taskId: v1(), title: "JS2", isDone: false},
+     //         {taskId: v1(), title: "JS2", isDone: false},
+     //         {taskId: v1(), title: "JS2", isDone: true},
+     //     ],
+     // }
+ ]
 
-export const toDoListsReducer = (state: ToDoListType[], action: ActionCreatorsType) => {
+export const toDoListsReducer = (state: ToDoListType[] = initialState, action: ActionCreatorsType) => {
     switch (action.type) {
         case "ADD-TASK":
             const newTask = {taskId: v1(), title: action.payload.title, isDone: false}

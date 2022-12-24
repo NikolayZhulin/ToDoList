@@ -47,6 +47,5 @@ export const AddItemForm = (props: AddItemPropsType) => {
                 color={"secondary"}
                 style={{minWidth: '39px', minHeight: '39px'}}
         >+</Button>
-        {/*{error && <div className="error-message">{error}</div>}*/}
     </div>
 }

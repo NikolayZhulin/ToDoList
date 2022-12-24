@@ -7,33 +7,37 @@ import {
 } from "../Action Creators/ToDoListsActionCreators";
 import {toDoListsReducer} from "./ToDoListsReducer";
 import {v1} from "uuid";
-import {FilterValuesType} from "../App";
+import {FilterValuesType, ToDoListType} from "../App";
 
 let taskId1=v1();
 
-let toDoLists = [
-    {
-        title: "What to learn",
-        filter: FilterValuesType.All,
-        tasks: [
-            {taskId: v1(), title: "HTML&CSS", isDone: true},
-            {taskId: v1(), title: "JS", isDone: true},
-            {taskId: v1(), title: "JS", isDone: false},
-            {taskId: v1(), title: "JS", isDone: false},
-        ],
-    },
-    {
-        title: "What to do",
-        filter: FilterValuesType.All,
-        tasks: [
-            {taskId: taskId1, title: "HTML&CSS2", isDone: true},
-            {taskId: v1(), title: "JS2", isDone: true},
-            {taskId: v1(), title: "JS2", isDone: false},
-            {taskId: v1(), title: "JS2", isDone: false},
-            {taskId: v1(), title: "JS2", isDone: true},
-        ],
-    }
-]
+let toDoLists: ToDoListType[]
+
+beforeEach(()=>{
+    toDoLists = [
+        {
+            title: "What to learn",
+            filter: FilterValuesType.All,
+            tasks: [
+                {taskId: v1(), title: "HTML&CSS", isDone: true},
+                {taskId: v1(), title: "JS", isDone: true},
+                {taskId: v1(), title: "JS", isDone: false},
+                {taskId: v1(), title: "JS", isDone: false},
+            ],
+        },
+        {
+            title: "What to do",
+            filter: FilterValuesType.All,
+            tasks: [
+                {taskId: taskId1, title: "HTML&CSS2", isDone: true},
+                {taskId: v1(), title: "JS2", isDone: true},
+                {taskId: v1(), title: "JS2", isDone: false},
+                {taskId: v1(), title: "JS2", isDone: false},
+                {taskId: v1(), title: "JS2", isDone: true},
+            ],
+        }
+    ]
+})
 
 test("Reducer should add 1 task in second todo list", ()=>{
     let result = toDoListsReducer(toDoLists, addTaskAC("New TASK", 1))
