@@ -1,25 +1,26 @@
-import React, {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useCallback, useState} from "react";
 import {TextField} from "@mui/material";
 
 type EditableSpanPropType = {
     title: string;
     onTextChanged: (title: string) => void
 }
-export const EditableSpan = (props: EditableSpanPropType) => {
+export const EditableSpan = React.memo((props: EditableSpanPropType) => {
+    console.log('edit span is called')
     const [title, setTitle] = useState<string>('');
     const [editMode, setEditMode] = useState<boolean>(false);
 
-    const activateEditMode = () => {
+    const activateEditMode = useCallback(() => {
         setEditMode(true);
         setTitle(props.title);
-    }
-    const deactivateEditMode = () => {
+    },[props.title])
+    const deactivateEditMode = useCallback(() => {
         setEditMode(false);
         props.onTextChanged(title);
-    }
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    },[ props.onTextChanged,title])
+    const onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value);
-    }
+    },[])
 
     return editMode
         ? <TextField id="outlined-basic"
@@ -32,4 +33,4 @@ export const EditableSpan = (props: EditableSpanPropType) => {
                      size={"small"}
         />
         : <span onDoubleClick={activateEditMode}>{props.title}</span>
-}
+})

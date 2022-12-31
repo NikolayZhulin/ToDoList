@@ -5,8 +5,8 @@ type AddItemPropsType = {
     addItem: (title: string) => void
 }
 
-export const AddItemForm = (props: AddItemPropsType) => {
-
+export const AddItemForm = React.memo((props: AddItemPropsType) => {
+    console.log('add item form is called')
     let [title, setTitle] = useState("")
     let [error, setError] = useState<string | null>(null)
 
@@ -15,7 +15,9 @@ export const AddItemForm = (props: AddItemPropsType) => {
     }
 
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-        setError(null);
+
+        error && setError(null);
+
         if (e.charCode === 13) {
             title.trim()
                 ? props.addItem(title.trim())
@@ -48,4 +50,4 @@ export const AddItemForm = (props: AddItemPropsType) => {
                 style={{minWidth: '39px', minHeight: '39px'}}
         >+</Button>
     </div>
-}
+})

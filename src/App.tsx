@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import './App.css';
 import {Todolist} from './Todolist';
 import {AddItemForm} from "./Components/AddItemForm";
@@ -11,6 +11,7 @@ import {
 } from "./Action Creators/ToDoListsActionCreators";
 import {useDispatch, useSelector} from "react-redux";
 import {AppRootState} from "./store/store";
+import {v1} from "uuid";
 
 
 export type ToDoListType = {
@@ -31,22 +32,21 @@ export enum FilterValuesType {
 }
 
 function App() {
-
+    console.log('---------------------app is called')
     const toDoLists = useSelector<AppRootState, ToDoListType[]>(store => store.toDoLists)
     const dispatch = useDispatch();
 
 
-    function removeTodolist(todolistId: number) {
+    const removeTodolist= useCallback((todolistId: number)=> {
         dispatch(removeToDoListAC(todolistId))
-    }
+    },[])
 
-    const editToDoListTitle = (toDoListId: number, title: string) => {
+    const editToDoListTitle = useCallback((toDoListId: number, title: string) => {
         dispatch(editToDoListTitleAC(toDoListId, title))
-    }
-    const addToDoList = (title: string) => {
+    },[])
+    const addToDoList = useCallback((title: string) => {
         dispatch(addToDoListAC(title))
-    }
-
+    },[])
 
     return (
         <div className="App">
@@ -62,15 +62,7 @@ function App() {
                       justifyContent="center">
                     {toDoLists.map((tl, index) => {
 
-                        let allTodolistTasks = tl.tasks;
-                        let tasksForTodolist = allTodolistTasks;
-
-                        if (tl.filter === "active") {
-                            tasksForTodolist = allTodolistTasks.filter(t => !t.isDone);
-                        }
-                        if (tl.filter === "completed") {
-                            tasksForTodolist = allTodolistTasks.filter(t => t.isDone);
-                        }
+                        let tasksForTodolist = tl.tasks;
 
                         return <Grid item key={index}>
                             <Paper elevation={2}
