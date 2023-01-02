@@ -12,6 +12,7 @@ import {
     removeTaskAC
 } from "./Action Creators/ToDoListsActionCreators";
 import {useDispatch} from "react-redux";
+import {Task} from "./Components/Task";
 
 
 type PropsType = {
@@ -23,18 +24,18 @@ type PropsType = {
     editToDoListTitle: (toDoListId: number, title: string) => void;
 }
 
-export const Todolist=React.memo((props: PropsType)=> {
-    console.log('todolist is called')
+export const Todolist = React.memo((props: PropsType) => {
+    console.log('todolist   ')
     const dispatch = useDispatch();
 
 
     const removeTodolist = useCallback(() => {
         props.removeTodolist(props.id)
-    },[])
+    }, [dispatch, props.id])
 
     const changeFilterCallBack = useCallback((filter: FilterValuesType) => {
         dispatch(changeToDoListFilterAC(filter, props.id))
-    },[dispatch, props.id])
+    }, [dispatch, props.id])
 
 
     let tasksForTodolist = props.tasks;
@@ -58,23 +59,11 @@ export const Todolist=React.memo((props: PropsType)=> {
         <ul>
             {
                 tasksForTodolist.map(t => {
-                    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-                        let newIsDoneValue = e.currentTarget.checked;
-                        dispatch(changeTaskStatusAC(t.taskId, newIsDoneValue, props.id));
-                    }
 
-                    return <li key={t.taskId} className={t.isDone ? "is-done" : ""}>
-                        <Checkbox
-                            checked={t.isDone}
-                            onChange={onChangeHandler}
-                            inputProps={{'aria-label': 'controlled'}}
-                            color={"secondary"}
-                        />
-                        <EditableSpan title={t.title}
-                                      onTextChanged={(title) => dispatch(editTaskTitleAC(props.id, t.taskId, title))}/>
-                        <IconButton aria-label="delete" onClick={() => dispatch(removeTaskAC(t.taskId, props.id))}>
-                            <Delete/>
-                        </IconButton>
+                    return <li key={t.taskId}
+                               className={t.isDone ? "is-done" : ""}>
+                        <Task task={t}
+                              todoListId={props.id}/>
                     </li>
                 })
             }

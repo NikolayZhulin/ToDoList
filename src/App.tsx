@@ -32,21 +32,22 @@ export enum FilterValuesType {
 }
 
 function App() {
-    console.log('---------------------app is called')
+    console.log(91)
     const toDoLists = useSelector<AppRootState, ToDoListType[]>(store => store.toDoLists)
     const dispatch = useDispatch();
 
 
     const removeTodolist= useCallback((todolistId: number)=> {
         dispatch(removeToDoListAC(todolistId))
-    },[])
+    },[dispatch])
 
     const editToDoListTitle = useCallback((toDoListId: number, title: string) => {
         dispatch(editToDoListTitleAC(toDoListId, title))
-    },[])
+    },[dispatch])
+
     const addToDoList = useCallback((title: string) => {
         dispatch(addToDoListAC(title))
-    },[])
+    },[dispatch])
 
     return (
         <div className="App">
@@ -62,14 +63,12 @@ function App() {
                       justifyContent="center">
                     {toDoLists.map((tl, index) => {
 
-                        let tasksForTodolist = tl.tasks;
-
                         return <Grid item key={index}>
                             <Paper elevation={2}
                                    style={{padding: '15px',}}>
                                 <Todolist
                                     id={index}
-                                    tasks={tasksForTodolist}
+                                    tasks={tl.tasks}
                                     title={tl.title}
                                     filter={tl.filter}
                                     removeTodolist={removeTodolist}

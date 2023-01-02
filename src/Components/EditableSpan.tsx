@@ -6,7 +6,7 @@ type EditableSpanPropType = {
     onTextChanged: (title: string) => void
 }
 export const EditableSpan = React.memo((props: EditableSpanPropType) => {
-    console.log('edit span is called')
+
     const [title, setTitle] = useState<string>('');
     const [editMode, setEditMode] = useState<boolean>(false);
 
@@ -14,13 +14,16 @@ export const EditableSpan = React.memo((props: EditableSpanPropType) => {
         setEditMode(true);
         setTitle(props.title);
     },[props.title])
+
     const deactivateEditMode = useCallback(() => {
         setEditMode(false);
         props.onTextChanged(title);
     },[ props.onTextChanged,title])
+
     const onChangeHandler = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         setTitle(e.currentTarget.value);
     },[])
+
 
     return editMode
         ? <TextField id="outlined-basic"
